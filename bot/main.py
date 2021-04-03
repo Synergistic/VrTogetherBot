@@ -62,6 +62,9 @@ async def on_member_update(before, after):
   if roleForEmoji is None: return
   channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
   if channel is None: return
-  await channel.send(after.name + " just started playing " + roleForEmoji.mention)
+  mostRecentMessages = await channel.history(limit=5).flatten()
+  mostRecentBotMessage = next((x for x in mostRecentMessages if x.author == client.user), None)
+  if mostRecentBotMessage is None or ((datetime.datetime.utcnow() - mostRecentBotMessage.created_at).total_seconds() / 60) > 10:
+    await channel.send(after.name + " just started playing " + roleForEmoji.mention)
 
 client.run(os.getenv('TOKEN'))
