@@ -25,7 +25,7 @@ async def on_message(message):
       if any(message.channel.name.lower() in r.name.lower() for r in message.guild.roles):
         for member in message.guild.members:
           if any(message.channel.name.lower() in r.name.lower() for r in member.roles) and member.name is not client.user.name:
-            output += member.name + ", "
+            memberList += member.name + ", "
       if len(memberList) <= 0:
         await message.channel.send("No one is subscribed here. (Is this a game channel?)")
       else:
