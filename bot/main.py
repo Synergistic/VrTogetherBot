@@ -1,5 +1,5 @@
 import discord
-from secrets import BOT_TOKEN
+import os 
 
 intents = discord.Intents().all()
 intents.presences = True
@@ -46,4 +46,4 @@ def getChannelById(id):
 def stripWhitespace(string):
   return "".join(string.split()).lower()
 
-client.run(BOT_TOKEN)
+client.run(os.getenv('TOKEN'))
