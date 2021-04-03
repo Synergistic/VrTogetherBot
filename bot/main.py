@@ -21,11 +21,16 @@ async def on_message(message):
     if "!commands" in messageContent:
       await message.author.send("!help, !who, !dicks")
     if "!who" in messageContent:
-      output = "The following people are subscribed to this game: "
-      for member in message.guild.members:
-        if any(message.channel.name.lower() in r.name.lower() for r in member.roles) and member.name is not client.user.name:
-          output += member.name + ", "
-      await message.channel.send(output[:-2])
+      memberList = ""
+      if any(message.channel.name.lower() in r.name.lower() for r in message.guild.roles):
+        for member in message.guild.members:
+          if any(message.channel.name.lower() in r.name.lower() for r in member.roles) and member.name is not client.user.name:
+            output += member.name + ", "
+      if len(memberList) <= 0:
+        await message.channel.send("No one is subscribed here. (Is this a game channel?)")
+      else:
+        await message.channel.send("The following people are subscribed to this game: " + memberList[:-2])
+        
     if "!dicks" in messageContent:
       await message.author.send("ur a dick")
 
