@@ -56,10 +56,8 @@ async def on_raw_reaction_add(payload):
 
 @client.event
 async def on_member_update(before, after):
-  # if before.status == "offline" and after.status == "online":
-  #   channel = next((x for x in after.guild.channels if x.name == "genera"), None)
-  #   channel.send("Welcome " + after.name);
   if after.activity is None: return
+  if after.activity is before.activity: return
   roleForEmoji = helpers.getRoleByName(after.guild.roles, after.activity.name)
   if roleForEmoji is None: return
   channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
