@@ -1,6 +1,7 @@
 import discord
 import os 
 import helpers
+
 intents = discord.Intents().all()
 intents.presences = True
 client = discord.Client(intents=intents)
@@ -13,19 +14,24 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if "!who" in message.content:
-      output = "The follow people are subscribed to this game: "
+    messageContent = helpers.stripWhitespace(message.content)
+    if "!help" in messageContent:
+      channel = helpers.getChannelByName(message.guild.channels, "getting-started")
+      await message.author.send("Hey! Check out the " + channel.mention + " channel and read the pinned post to start playing VR with others.")
+    if "!commands" in messageContent:
+      await message.author.send("!help, !who, !dicks")
+    if "!who" in messageContent:
+      output = "The following people are subscribed to this game: "
       for member in message.guild.members:
         if any(message.channel.name.lower() in r.name.lower() for r in member.roles) and member.name is not client.user.name:
           output += member.name + ", "
       await message.channel.send(output[:-2])
-    if "!dicks" in message.content:
-      await message.channel.send("ur a dick")
-
+    if "!dicks" in messageContent:
+      await message.author.send("ur a dick")
 
 @client.event
 async def on_raw_reaction_add(payload):
-  roleForEmoji = getRoleByName(payload.emoji.name)
+  roleForEmoji = helpers.getRoleByName(payload.member.guild.roles, payload.emoji.name)
   if roleForEmoji is not None:
     await payload.member.add_roles(roleForEmoji)
 
@@ -35,7 +41,7 @@ async def on_member_update(before, after):
   #   channel = next((x for x in after.guild.channels if x.name == "genera"), None)
   #   channel.send("Welcome " + after.name);
   if after.activity is None: return
-  roleForEmoji = getRoleByName(after.activity.name)
+  roleForEmoji = helpers.getRoleByName(after.guild.roles, after.activity.name)
   if roleForEmoji is None: return
   channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
   if channel is None: return
