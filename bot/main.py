@@ -16,7 +16,7 @@ async def on_message(message):
         return
     messageContent = helpers.stripWhitespace(message.content)
     if "!help" in messageContent:
-      channel = helpers.getChannelByName(message.guild.channels, "getting-started")
+      channel = helpers.getChannelByName(message.guild.channels, "general")
       await message.author.send("Hey! Check out the " + channel.mention + " channel and read the pinned post to start playing VR with others.")
     if "!commands" in messageContent:
       await message.author.send("!help, !who, !dicks")
