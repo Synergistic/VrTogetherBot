@@ -24,10 +24,10 @@ async def on_message(message):
       await message.author.send("!help, !friends, !dicks")
       return
     if "!friends" in messageContent:
-      await message.author.send("https://steamcommunity.com/groups/vrtogether")
+      await message.author.send("Send your steamID to Cinderous to get an invite to steam group, the easiest way to share steam friends: https://steamcommunity.com/groups/vrtogether.\nIf any Oculus people out there have something similiar for spreading Oculus platform friends please share :)")
       return
     if "!dicks" in messageContent:
-      await message.author.send("ur a dick")
+      await message.channel.send("ur a dick")
       return
 
 @client.event
@@ -44,8 +44,9 @@ async def on_member_update(before, after):
   if roleForEmoji is None: return
   channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
   if channel is None: return
-  mostRecentMessages = await channel.history(limit=5).flatten()
+  mostRecentMessages = await channel.history(limit=25).flatten()
   mostRecentBotMessage = next((x for x in mostRecentMessages if x.author == client.user), None)
   if mostRecentBotMessage is None or ((datetime.datetime.utcnow() - mostRecentBotMessage.created_at).total_seconds() / 60) > 30:
-    await channel.send(after.name + " just started playing " + roleForEmoji.mention)
+    await channel.send(after.name + " is playing " + roleForEmoji.mention)
+
 client.run(os.getenv('TOKEN'))
