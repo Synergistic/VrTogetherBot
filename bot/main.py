@@ -44,7 +44,6 @@ async def on_message(message):
       else:
         await message.channel.send("The following people are subscribed to this game: " + memberList[:-2])
         return
-        
     if "!dicks" in messageContent:
       await message.author.send("ur a dick")
       return
@@ -58,14 +57,13 @@ async def on_raw_reaction_add(payload):
 @client.event
 async def on_member_update(before, after):
   if after.activity is None: return
-  if after.activity is before.activity: return
+  if after.activity.name === before.activity.name: return
   roleForEmoji = helpers.getRoleByName(after.guild.roles, after.activity.name)
   if roleForEmoji is None: return
   channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
   if channel is None: return
   mostRecentMessages = await channel.history(limit=5).flatten()
   mostRecentBotMessage = next((x for x in mostRecentMessages if x.author == client.user), None)
-  if mostRecentBotMessage is None or ((datetime.datetime.utcnow() - mostRecentBotMessage.created_at).total_seconds() / 60) > 10:
+  if mostRecentBotMessage is None or ((datetime.datetime.utcnow() - mostRecentBotMessage.created_at).total_seconds() / 60) > 30:
     await channel.send(after.name + " just started playing " + roleForEmoji.mention)
-
 client.run(os.getenv('TOKEN'))
