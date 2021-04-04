@@ -25,7 +25,7 @@ async def on_message(message):
       await message.author.send("!help, !friends, !dicks")
       return
     if "!friends" in messageContent:
-      await message.author.send("Send your steamID to Cinderous to get an invite to steam group, the easiest way to share steam friends: https://steamcommunity.com/groups/vrtogether.\nIf any Oculus people out there have something similiar for spreading Oculus platform friends please share :)")
+      await message.author.send(constants.friendsText)
       return
     if "!dicks" in messageContent:
       await message.channel.send("ur a dick")
