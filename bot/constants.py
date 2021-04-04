@@ -19,3 +19,7 @@ rules = [ "Welcome To VR Together, a small side project to help everyone enjoy t
     "    - Remove roles from yourself on the member list on the right hand side to unsubscribe",
     "    - Try !commands to see what else I can do" ,   
     ]
+
+    
+simracers = ['assetto corsa', 'assetto corsa competizione', 'project cars', 'project cars 2', 'dirt rally', 'touring karts', 'kartkraft']
+othergames = ['beat saber', 'zero caliber vr', 'gorilla tag', 'smashbox arena', 'cloudlands : vr minigolf', 'no man\'s sky', 'eleven table tennis', 'sportsbar vr']

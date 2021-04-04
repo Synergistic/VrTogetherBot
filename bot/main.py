@@ -2,6 +2,7 @@ import discord
 import os 
 import helpers
 import datetime
+import constants
 
 intents = discord.Intents().all()
 intents.presences = True
@@ -41,7 +42,17 @@ async def on_member_update(before, after):
   if after.activity is None: return
   if before.activity is not None and after.activity.name == before.activity.name: return
   roleForEmoji = helpers.getRoleByName(after.guild.roles, after.activity.name)
-  if roleForEmoji is None: return
+  if roleForEmoji is None:
+    if after.activity.name.lower() in constants.othergames:
+      channel = helpers.getChannelByName(after.guild.channels, "other-games")
+      await channel.send(channel.mention + " " + after.name + " is playing " + after.activity.name)
+      return
+    if after.activity.name.lower() in constants.simracers:
+      channel = helpers.getChannelByName(after.guild.channels, "simracing")
+      roleForEmoji = helpers.getRoleByName(after.guild.roles, "simracing")
+      await channel.send(after.name + " is playing " + after.activity.name + "(" + roleForEmoji.mention + ")")
+      return
+    return
   channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
   if channel is None: return
   mostRecentMessages = await channel.history(limit=25).flatten()
