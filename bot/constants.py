@@ -48,6 +48,3 @@ othergames = [
 ]
 
 minutesBetweenMessages = 30
-infoText = { 
-    'simracing': "We play the following sim racers\n\n> " + "\n> ".join(simracers) + "\n\nWith the primary one being **Assetto Corsa**. See below for more info"
-}
