@@ -30,6 +30,9 @@ async def on_message(message):
     if "!dicks" in messageContent:
       await message.channel.send("ur a dick")
       return
+    if "!server" in messageContent and message.channel.name.lower() == "simracing":
+      await message.channel.send(constants.serverText)
+      return
 
 @client.event
 async def on_raw_reaction_add(payload):

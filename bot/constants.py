@@ -24,3 +24,4 @@ friendsText = "Send your steamID to Cinderous to get an invite to steam group, t
 simracers = ['assetto corsa', 'assetto corsa competizione', 'project cars', 'project cars 2', 'dirt rally', 'touring karts', 'kartkraft']
 othergames = ['beat saber', 'zero caliber vr', 'gorilla tag', 'smashbox arena', 'cloudlands : vr minigolf', 'no man\'s sky', 'eleven table tennis', 'sportsbar vr']
 minutesBetweenMessages = 30
+serverText = "Server Name: RacingBros\nPassword: bruh\n\nContentManager Link: https://acstuff.ru/s/q:race/online/join?ip=73.149.139.46&httpPort=8081&password=VUFbWQ=="
