@@ -3,6 +3,7 @@ import os
 import helpers
 import datetime
 import constants
+import info
 
 intents = discord.Intents().all()
 intents.presences = True
@@ -22,7 +23,7 @@ async def on_message(message):
       await message.author.send("Hey! Check out the " + channel.mention + " channel and read the pinned post to start playing VR with others.")
       return
     if "!commands" in messageContent:
-      await message.author.send("!help, !friends, !dicks")
+      await message.author.send("!help, !friends, !dicks, !info (only works in certain game channels)")
       return
     if "!friends" in messageContent:
       await message.author.send(constants.friendsText)
@@ -30,9 +31,13 @@ async def on_message(message):
     if "!dicks" in messageContent:
       await message.channel.send("ur a dick")
       return
-    if "!server" in messageContent and message.channel.name.lower() == "simracing":
-      await message.channel.send(constants.serverText)
-      return
+    if "!info" in messageContent:
+      stuff = info.GetInfoForChannel(message.channel.name)
+      if stuff is not None:
+        await message.author.send(stuff['info'])
+        for em in stuff['embeds']:
+          await message.author.send(embed=em)
+
 
 @client.event
 async def on_raw_reaction_add(payload):

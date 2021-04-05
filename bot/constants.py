@@ -1,3 +1,5 @@
+import info
+
 rules = [ "Welcome To VR Together, a small side project to help everyone enjoy their expensive fancy toys just a little bit more.",
     "",
     "===Rules===",
@@ -20,8 +22,32 @@ rules = [ "Welcome To VR Together, a small side project to help everyone enjoy t
     "    - Try !commands to see what else I can do" ,   
     ]
 
-friendsText = "Send your steamID to Cinderous to get an invite to steam group, the easiest way to share steam friends: https://steamcommunity.com/groups/vrtogether \nIf any Oculus people out there have something similiar for spreading Oculus platform friends please share :)"
-simracers = ['assetto corsa', 'assetto corsa competizione', 'project cars', 'project cars 2', 'dirt rally', 'touring karts', 'kartkraft']
-othergames = ['beat saber', 'zero caliber vr', 'gorilla tag', 'smashbox arena', 'cloudlands : vr minigolf', 'no man\'s sky', 'eleven table tennis', 'sportsbar vr']
+friendsText = """Send your steamID to Cinderous to get an invite to steam group,
+                the easiest way to share steam friends: https://steamcommunity.com/groups/vrtogether 
+                \nIf any Oculus people out there have something similiar for spreading Oculus platform friends please share :)"""
+
+simracers = [
+    'assetto corsa', 
+    'assetto corsa competizione', 
+    'project cars', 
+    'project cars 2', 
+    'dirt rally', 
+    'touring karts', 
+    'kartkraft'
+]
+
+othergames = [
+    'beat saber', 
+    'zero caliber vr', 
+    'gorilla tag', 
+    'smashbox arena', 
+    'cloudlands : vr minigolf', 
+    'no man\'s sky', 
+    'eleven table tennis', 
+    'sportsbar vr'
+]
+
 minutesBetweenMessages = 30
-serverText = "Server Name: RacingBros\nPassword: bruh\n\nContentManager Link: https://acstuff.ru/s/q:race/online/join?ip=73.149.139.46&httpPort=8081&password=VUFbWQ=="
+infoText = { 
+    'simracing': "We play the following sim racers\n\n> " + "\n> ".join(simracers) + "\n\nWith the primary one being **Assetto Corsa**. See below for more info"
+}
