@@ -17,18 +17,21 @@ def GetInfoForChannel(channelName):
             [
                 Generate("Content Manager", 
                     "Assetto Corsa Utility to help manage mods, settings, and join servers.", 
-                    "https://assettocorsa.club/content-manager.html"),
+                    "https://assettocorsa.club/content-manager.html",
+                    "https://assettocorsa.club/assets/template/images/cm/logo.png"),
                 Generate("Dialing In your ForceFeedback",
                     "Utility for optimizing FFB for YOUR steering wheel",
                     "https://www.racedepartment.com/downloads/lut-generator-for-ac.9740/"),
-                Generate("AssettoCorsa Club (Mods)", 
-                    "Great resource for mods, install easily with Content Manager", 
-                    "https://assettocorsa.club/content-manager.html"),
+                Generate("Race Department", 
+                    "Great resource for mods", 
+                    "https://www.racedepartment.com/downloads/categories/assetto-corsa.1/?page=1",
+                    "https://pbs.twimg.com/profile_images/1079754051816964099/b72uU42T_400x400.jpg"),
                 Generate("AC Dedicated Server (click to join with CM)", 
                     "Server Name: RacingBros\nPassword: bruh", 
-                    "https://acstuff.ru/s/q:race/online/join?ip=73.149.139.46&httpPort=8081&password=VUFbWQ==")
+                    "https://acstuff.ru/s/q:race/online/join?ip=73.149.139.46&httpPort=8081&password=VUFbWQ==",
+                    "https://pbs.twimg.com/profile_images/1004391140739739648/2YaxiFpp_400x400.jpg")
             ], 
-            'info': "We play the following sim racers\n\n> " + "\n> ".join(simracers) + "\n\nWith the primary one being **Assetto Corsa**. See below for more info"
+            'info': "We play the following sim racers\n\n> " + "\n> ".join(constants.simracers) + "\n\nWith the primary one being **Assetto Corsa**. See below for more info"
         }
     if 'echovr' in channelName:
         return { 'embeds': 
