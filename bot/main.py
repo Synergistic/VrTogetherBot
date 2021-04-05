@@ -40,24 +40,31 @@ async def on_raw_reaction_add(payload):
 @client.event
 async def on_member_update(before, after):
   if after.activity is None: return
-  if before.activity is not None and after.activity.name == before.activity.name: return
-  roleForEmoji = helpers.getRoleByName(after.guild.roles, after.activity.name)
-  if roleForEmoji is None:
-    if after.activity.name.lower() in constants.othergames:
-      channel = helpers.getChannelByName(after.guild.channels, "other-games")
-      await channel.send(channel.mention + " " + after.name + " is playing " + after.activity.name)
-      return
-    if after.activity.name.lower() in constants.simracers:
-      channel = helpers.getChannelByName(after.guild.channels, "simracing")
-      roleForEmoji = helpers.getRoleByName(after.guild.roles, "simracing")
-      await channel.send(after.name + " is playing " + after.activity.name + "(" + roleForEmoji.mention + ")")
-      return
+  targetActivity = after.activity.name
+  if before.activity is not None and targetActivity == before.activity.name: return
+  roleForEmoji = helpers.getRoleByName(after.guild.roles, targetActivity)
+  if targetActivity.lower() in constants.othergames:
+    await ReportActivityToChannel(channel.mention + " " + after.name + " is playing " + targetActivity, helpers.getChannelByName(after.guild.channels, "other-games"))
     return
-  channel = next((x for x in after.guild.channels if x.name == roleForEmoji.name.lower()), None)
+  if targetActivity.lower() in constants.simracers:
+    roleForEmoji = helpers.getRoleByName(after.guild.roles, "simracing")
+    await ReportActivityToChannel(after.name + " is playing " + targetActivity + "(" + roleForEmoji.mention + ")", helpers.getChannelByName(after.guild.channels, "simracing"))
+    return
+  if roleForEmoji is None: return
   if channel is None: return
-  mostRecentMessages = await channel.history(limit=25).flatten()
-  mostRecentBotMessage = next((x for x in mostRecentMessages if x.author == client.user), None)
-  if mostRecentBotMessage is None or ((datetime.datetime.utcnow() - mostRecentBotMessage.created_at).total_seconds() / 60) > 30:
-    await channel.send(after.name + " is playing " + roleForEmoji.mention)
+  await ReportActivityToChannel(after.name + " is playing " + roleForEmoji.mention, helpers.getChannelByName(after.guild.channels, roleForEmoji.name.lower()))
+
+async def ReportActivityToChannel(message, channel):
+  if not await ReportedInThisChangeRecently(channel):
+    await channel.send(message)
+  return
+
+async def ReportedInThisChangeRecently(channel):
+  mostRecentMessages = await channel.history(limit=50).flatten()
+  botMessageWithinXMinutes = any(x for x in mostRecentMessages if x.author == client.user and ((datetime.datetime.utcnow() - x.created_at).total_seconds() / 60) <= constants.minutesBetweenMessages)
+  if botMessageWithinXMinutes is None:
+    return False
+  return True
+
 
 client.run(os.getenv('TOKEN'))
