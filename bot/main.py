@@ -70,9 +70,7 @@ async def ReportActivityToChannel(message, channel):
 async def ReportedInThisChangeRecently(channel):
   mostRecentMessages = await channel.history(limit=50).flatten()
   botMessageWithinXMinutes = any(x for x in mostRecentMessages if x.author == client.user and ((datetime.datetime.utcnow() - x.created_at).total_seconds() / 60) <= constants.minutesBetweenMessages)
-  if botMessageWithinXMinutes is None:
-    return False
-  return True
+  return botMessageWithinXMinutes
 
 
 client.run(os.getenv('TOKEN'))
