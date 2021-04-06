@@ -59,7 +59,6 @@ async def on_member_update(before, after):
     await ReportActivityToChannel(after.name + " is playing " + targetActivity + "(" + roleForEmoji.mention + ")", helpers.getChannelByName(after.guild.channels, "simracing"))
     return
   if roleForEmoji is None: return
-  if channel is None: return
   await ReportActivityToChannel(after.name + " is playing " + roleForEmoji.mention, helpers.getChannelByName(after.guild.channels, roleForEmoji.name.lower()))
 
 async def ReportActivityToChannel(message, channel):
