@@ -23,13 +23,10 @@ async def on_message(message):
       await message.author.send("Hey! Check out the " + channel.mention + " channel and read the pinned post to start playing VR with others.")
       return
     if "!commands" in messageContent:
-      await message.author.send("!help, !friends, !dicks, !info (only works in certain game channels)")
+      await message.author.send("!help, !friends, !info (only works in certain game channels)")
       return
     if "!friends" in messageContent:
       await message.author.send(constants.friendsText)
-      return
-    if "!dicks" in messageContent:
-      await message.channel.send("ur a dick")
       return
     if "!info" in messageContent:
       stuff = info.GetInfoForChannel(message.channel.name)
@@ -37,7 +34,6 @@ async def on_message(message):
         await message.author.send(stuff['info'])
         for em in stuff['embeds']:
           await message.author.send(embed=em)
-
 
 @client.event
 async def on_raw_reaction_add(payload):
@@ -62,11 +58,11 @@ async def on_member_update(before, after):
   await ReportActivityToChannel(after.name + " is playing " + roleForEmoji.mention, helpers.getChannelByName(after.guild.channels, roleForEmoji.name.lower()))
 
 async def ReportActivityToChannel(message, channel):
-  if not await ReportedInThisChangeRecently(channel):
+  if not await ReportedInThisChannelRecently(channel):
     await channel.send(message)
   return
 
-async def ReportedInThisChangeRecently(channel):
+async def ReportedInThisChannelRecently(channel):
   mostRecentMessages = await channel.history(limit=50).flatten()
   botMessageWithinXMinutes = any(x for x in mostRecentMessages if x.author == client.user and ((datetime.datetime.utcnow() - x.created_at).total_seconds() / 60) <= constants.minutesBetweenMessages)
   return botMessageWithinXMinutes
