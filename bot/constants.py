@@ -22,7 +22,8 @@ othergames = [
     'cloudlands : vr minigolf', 
     'no man\'s sky', 
     'eleven table tennis', 
-    'sportsbar vr'
+    'sportsbar vr',
+    'phasmophobia'
 ]
 
 minutesBetweenMessages = 45
