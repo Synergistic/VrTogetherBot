@@ -43,6 +43,14 @@ def GetInfoForChannel(channelName):
             ], 
             'info': "EchoVR is free, but it is only available on the Oculus Store. To those without an Oculus device, you'll need to use Revive."
         }
+    if 'pavlovvr' in channelName:
+        return { 'embeds': 
+            [
+                Generate("[TDM] Wonderland [VR-Together.net]", 
+                    "66.11.116.34:7788 - Send Requests for maps/modes to Cinderous"),
+            ], 
+            'info': "PavlovVR, the CS/CoD of VR. We've got a dedicated server now!"
+        }
     if 'grappletournament' in channelName:
         return { 'embeds': 
             [
