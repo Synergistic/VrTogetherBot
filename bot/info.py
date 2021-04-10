@@ -47,7 +47,9 @@ def GetInfoForChannel(channelName):
         return { 'embeds': 
             [
                 Generate("[TDM] Wonderland [VR-Together.net]", 
-                    "66.11.116.34:7788 - Send Requests for maps/modes to Cinderous"),
+                    "Pavlov Dedicated Server - Click for scoreboard/current players",
+                    "https://pavlov-web-scoreboard.herokuapp.com/",
+                    "https://steamuserimages-a.akamaihd.net/ugc/806620367831622292/54DB33FEEC887C7018791F31200F6F4D49898A97/"),
             ], 
             'info': "PavlovVR, the CS/CoD of VR. We've got a dedicated server now!"
         }
