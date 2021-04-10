@@ -47,15 +47,23 @@ async def on_member_update(before, after):
   targetActivity = after.activity.name
   if before.activity is not None and targetActivity == before.activity.name: return
   roleForEmoji = helpers.getRoleByName(after.guild.roles, targetActivity)
-  if targetActivity.lower() in constants.othergames:
-    await ReportActivityToChannel(channel.mention + " " + after.name + " is playing " + targetActivity, helpers.getChannelByName(after.guild.channels, "other-games"))
-    return
-  if targetActivity.lower() in constants.simracers:
+  targetChannel = None
+  output = None
+  if roleForEmoji is not None:
+    targetChannel = helpers.getChannelByName(after.guild.channels, roleForEmoji.name.lower())
+    output = after.name + " is playing " + roleForEmoji.mention
+  elif targetActivity.lower() in constants.othergames:
+    roleForEmoji = helpers.getRoleByName(after.guild.roles, "IJustLikeVR")
+    targetChannel = helpers.getChannelByName(after.guild.channels, "other-games")
+    output = targetChannel.mention + " " + after.name + " is playing " + targetActivity
+  elif targetActivity.lower() in constants.simracers:
     roleForEmoji = helpers.getRoleByName(after.guild.roles, "simracing")
-    await ReportActivityToChannel(after.name + " is playing " + targetActivity + "(" + roleForEmoji.mention + ")", helpers.getChannelByName(after.guild.channels, "simracing"))
-    return
+    targetChannel = helpers.getChannelByName(after.guild.channels, "simracing")
+    output = after.name + " is playing " + targetActivity + "(" + roleForEmoji.mention + ")"
   if roleForEmoji is None: return
-  await ReportActivityToChannel(after.name + " is playing " + roleForEmoji.mention, helpers.getChannelByName(after.guild.channels, roleForEmoji.name.lower()))
+  if not helpers.containsRole(after.roles, roleForEmoji.name):
+    await after.add_roles(roleForEmoji)
+  await ReportActivityToChannel(output, targetChannel)
 
 async def ReportActivityToChannel(message, channel):
   if not await ReportedInThisChannelRecently(channel):

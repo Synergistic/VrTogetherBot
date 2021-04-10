@@ -8,6 +8,9 @@ def getChannelByName(channels, name):
 def stripWhitespace(string):
   return "".join(string.split()).lower()
 
+def containsRole(roles, targetRole):
+  return any(r for r in roles if r.name.lower() == targetRole.lower())
+
 async def postGettingStartedMessage(client):
   channel = helpers.getChannelByName(client.guilds[0].channels, "getting-started")
   channel2 = helpers.getChannelByName(client.guilds[0].channels, "polls-and-surveys")
