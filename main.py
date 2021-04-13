@@ -85,4 +85,5 @@ async def update_leaderboard():
   
 
 client.loop.create_task(update_leaderboard())
-client.run(os.getenv('TOKEN'))
+if __name__== "__main__":
+  client.run(os.getenv('TOKEN'))
