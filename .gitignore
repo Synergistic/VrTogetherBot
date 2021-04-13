@@ -1,3 +1,4 @@
 
 *.pyc
 bot/__pycache__/constants.cpython-39.pyc
+env/*
