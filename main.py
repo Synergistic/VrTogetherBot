@@ -84,7 +84,7 @@ async def update_leaderboard():
       if status == UpdateStatus.NO_PLAYERS:
         await asyncio.sleep(180)
       if status == UpdateStatus.ROUND_ONGOING:
-        await asyncio.sleep(5)
+        await asyncio.sleep(6)
       if status == UpdateStatus.SCORES_SAVED:
         await asyncio.sleep(580)
     else:
