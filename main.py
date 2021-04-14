@@ -85,11 +85,11 @@ async def update_leaderboard():
         print("No players, checking again in a few minutes")
         await asyncio.sleep(300)
       if status == UpdateStatus.ROUND_ONGOING:
-        print("Round still going, checking again in 6")
-        await asyncio.sleep(6)
+        print("Round still going, checking again in 5")
+        await asyncio.sleep(5)
       if status == UpdateStatus.SCORES_SAVED:
         print("captured stats, waiting for next round end")
-        await asyncio.sleep(600)
+        await asyncio.sleep(580)
     else:
       await asyncio.sleep(30)
 
