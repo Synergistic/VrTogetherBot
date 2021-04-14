@@ -79,7 +79,7 @@ async def update_leaderboard():
       result = response.json()
       if result["success"]:
         if result["updated"]:
-          print("waiting longer cause we just updated")
+          print("captured stats, waitiing for next round end")
           await asyncio.sleep(600)
     await asyncio.sleep(5)
   
