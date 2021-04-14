@@ -82,8 +82,10 @@ async def update_leaderboard():
         print("Failed to check/record stats " + result["exception"] + " " +  result["trace"])
         await asyncio.sleep(60)
       if status == UpdateStatus.NO_PLAYERS:
+        print("no players")
         await asyncio.sleep(180)
       if status == UpdateStatus.ROUND_ONGOING:
+        print("matching ongoing")
         await asyncio.sleep(6)
       if status == UpdateStatus.SCORES_SAVED:
         print("recorded stats")
