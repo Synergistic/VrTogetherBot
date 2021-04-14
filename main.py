@@ -79,7 +79,7 @@ async def update_leaderboard():
       result = response.json()
       status = int(result["status"])
       if status == UpdateStatus.FAILED:
-        print("Failed to check/record stats " + result["exception"])
+        print("Failed to check/record stats " + result["exception"] + " " +  result["trace"])
         await asyncio.sleep(60)
       if status == UpdateStatus.NO_PLAYERS:
         print("No players, checking again in a few minutes")
