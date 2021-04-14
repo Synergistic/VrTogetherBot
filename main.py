@@ -83,7 +83,7 @@ async def update_leaderboard():
         await asyncio.sleep(60)
       if status == UpdateStatus.NO_PLAYERS:
         print("No players, checking again in a few minutes")
-        await asyncio.sleep(300)
+        await asyncio.sleep(180)
       if status == UpdateStatus.ROUND_ONGOING:
         print("Round still going, checking again in 5")
         await asyncio.sleep(5)
