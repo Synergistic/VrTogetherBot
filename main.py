@@ -89,6 +89,9 @@ async def update_leaderboard():
       if result["status"] == UpdateStatus.SCORES_SAVED:
         print("captured stats, waiting for next round end")
         await asyncio.sleep(600)
+    else:
+      await asyncio.sleep(15)
+
 
 from enum import Enum
 class UpdateStatus(Enum):
