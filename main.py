@@ -80,8 +80,8 @@ async def update_leaderboard():
       if result["success"]:
         if result["updated"]:
           print("waiting longer cause we just updated")
-          await asyncio.sleep(580)
-    await asyncio.sleep(20)
+          await asyncio.sleep(45)
+    await asyncio.sleep(15)
   
 
 client.loop.create_task(update_leaderboard())
