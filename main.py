@@ -77,12 +77,25 @@ async def update_leaderboard():
     response = requests.get("https://pavlov-web-scoreboard.herokuapp.com/api/leaderboard/update", headers= {'Content-Type': 'application/json'})
     if response.status_code == 200:
       result = response.json()
-      if result["success"]:
-        if result["updated"]:
-          print("captured stats, waitiing for next round end")
-          await asyncio.sleep(600)
-    await asyncio.sleep(5)
-  
+      if result["status"] == UpdateStatus.FAILED:
+        print("Failed to check/record stats")
+        await asyncio.sleep(30)
+      if result["status"] == UpdateStatus.NO_PLAYERS:
+        print("No players, checking again in a minute")
+        await asyncio.sleep(60)
+      if result["status"] == UpdateStatus.ROUND_ONGOING:
+        print("Round still going, checking again in 5")
+        await asyncio.sleep(5)
+      if result["status"] == UpdateStatus.SCORES_SAVED:
+        print("captured stats, waiting for next round end")
+        await asyncio.sleep(600)
+
+from enum import Enum
+class UpdateStatus(Enum):
+    FAILED = 0
+    NO_PLAYERS = 1
+    ROUND_ONGOING = 2
+    SCORES_SAVED = 3
 
 client.loop.create_task(update_leaderboard())
 if __name__== "__main__":
