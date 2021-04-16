@@ -1,15 +1,13 @@
-import os, datetime
-import constants, helpers, info
-import discord, asyncio, requests
+import os, asyncio, datetime
+import constants, helpers, info, PavlovServerAdmin
+import discord
 
 intents = discord.Intents().all()
 intents.presences = True
 client = discord.Client(intents=intents)
-
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-    
 
 @client.event
 async def on_message(message):
@@ -71,36 +69,12 @@ async def ReportedInThisChannelRecently(channel):
   botMessageWithinXMinutes = any(x for x in mostRecentMessages if x.author == client.user and ((datetime.datetime.utcnow() - x.created_at).total_seconds() / 60) <= constants.minutesBetweenMessages)
   return botMessageWithinXMinutes
 
-async def update_leaderboard():
-  run=True
-  while(run):
-    response = requests.get("https://pavlov-web-scoreboard.herokuapp.com/api/leaderboard/update", headers= {'Content-Type': 'application/json'})
-    if response.status_code == 200:
-      result = response.json()
-      status = int(result["status"])
-      if status == UpdateStatus.FAILED:
-        print("Failed to check/record stats " + result["exception"] + " " +  result["trace"])
-        await asyncio.sleep(60)
-      if status == UpdateStatus.NO_PLAYERS:
-        print("no players")
-        await asyncio.sleep(180)
-      if status == UpdateStatus.ROUND_ONGOING:
-        print("match ongoing")
-        await asyncio.sleep(5)
-      if status == UpdateStatus.SCORES_SAVED:
-        print("recorded stats")
-        await asyncio.sleep(580)
-    else:
-      await asyncio.sleep(30)
+def log(someThing):
+  print(someThing)
 
 
-from enum import IntEnum
-class UpdateStatus(IntEnum):
-    FAILED = 0
-    NO_PLAYERS = 1
-    ROUND_ONGOING = 2
-    SCORES_SAVED = 3
+PavlovPoller = PavlovServerAdmin.Poller(os.getenv("RCON_IP"), os.getenv("RCON_PORT"), os.getenv("RCON_PASS"), log)
+client.loop.create_task(PavlovPoller.getCoroutine())
 
-client.loop.create_task(update_leaderboard())
 if __name__== "__main__":
   client.run(os.getenv('TOKEN'))
