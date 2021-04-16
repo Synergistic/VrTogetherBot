@@ -30,7 +30,10 @@ class Rcon:
 
 
     async def getServerInfo(self):
-        return (await self.rconInstance.send("ServerInfo"))["ServerInfo"]
+        try:
+            return (await self.rconInstance.send("ServerInfo"))["ServerInfo"]
+        except:
+            return None
 
     async def getFriendlyMapName(self, mapId):
         return maps[mapId]

@@ -73,8 +73,6 @@ async def ReportedInThisChannelRecently(channel):
 def log(someThing):
   print(someThing)
 
-
-
 if __name__== "__main__":
   PavlovPoller = PavlovServerAdmin.Poller(os.getenv("RCON_IP"), os.getenv("RCON_PORT"), os.getenv("RCON_PASS"), log)
   client.loop.create_task(PavlovPoller.getCoroutine())
