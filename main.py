@@ -2,6 +2,9 @@ import os, asyncio, datetime
 import constants, helpers, info, PavlovServerAdmin
 import discord
 
+intents = discord.Intents().all()
+intents.presences = True
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
@@ -73,9 +76,6 @@ def log(someThing):
 
 
 if __name__== "__main__":
-  intents = discord.Intents().all()
-  intents.presences = True
-  client = discord.Client(intents=intents)
   PavlovPoller = PavlovServerAdmin.Poller(os.getenv("RCON_IP"), os.getenv("RCON_PORT"), os.getenv("RCON_PASS"), log)
   client.loop.create_task(PavlovPoller.getCoroutine())
   client.run(os.getenv('TOKEN'))
