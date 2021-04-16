@@ -86,7 +86,7 @@ async def update_leaderboard():
         await asyncio.sleep(180)
       if status == UpdateStatus.ROUND_ONGOING:
         print("match ongoing")
-        await asyncio.sleep(6)
+        await asyncio.sleep(5)
       if status == UpdateStatus.SCORES_SAVED:
         print("recorded stats")
         await asyncio.sleep(580)
