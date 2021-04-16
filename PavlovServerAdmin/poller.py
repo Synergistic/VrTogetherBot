@@ -1,6 +1,6 @@
 from .rcon import Rcon
 from .database import DbContext
-import os, asyncio
+import os, asyncio, sys, traceback
 
 class Poller:
     def __init__(self, ipAddress, rconPort, rconPass, logger):
@@ -20,7 +20,6 @@ class Poller:
         while(True):
             try:
                 self.__server_info_current = await self.__rconConnection.getServerInfo()
-                self.logger("SERVER-POLL: Polling {}".format(self.__server_info_current))
                 playerCount = int(self.__server_info_current["PlayerCount"].split("/")[0])
                 roundEnding = self.__server_info_current["RoundState"] == "Ended"
                 if roundEnding and (self.__players_to_save or (playerCount > 0)):
@@ -33,15 +32,15 @@ class Poller:
                         self.logger("SERVER-POLL: I see players, starting stat tracker.")
                         self.__poll_player_stats_run = True
                         asyncio.create_task(self.poll_player_stats())
-                    if self.__poll_player_stats_run is True and playerCount == 0: 
+                    if self.__poll_player_stats_run and playerCount == 0: 
                         self.logger("SERVER-POLL: No active players, stopping stat tracker.")
                         self.__poll_player_stats_run = False
             
-                    if self.__poll_save_stats_run is True and (not self.__players_to_save and (playerCount == 0)): 
+                    if self.__poll_save_stats_run and (not self.__players_to_save and (playerCount == 0)): 
                         self.logger("SERVER-POLL: No captured player data and no active players, stopping stat saver.")
                         self.__poll_save_stats_run = False
             except:
-                print("Something went wrong")
+                self.logger("{} {}".format(sys.exc_info(),traceback.format_exc()))
             await asyncio.sleep(self.__main_loop_in_seconds)
 
     async def poll_save_stats(self):

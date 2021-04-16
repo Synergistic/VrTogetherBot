@@ -46,7 +46,8 @@ class DbContext:
                 "ON DUPLICATE KEY UPDATE "
                 "kills=VALUES(kills)+kills, "
                 "deaths=VALUES(deaths)+deaths, "
-                "points=VALUES(points)+points").format(",".join(valuesList))
+                "points=VALUES(points)+points, "
+                "name=VALUES(name)").format(",".join(valuesList))
         try:
             self.execute(query)
         except:
